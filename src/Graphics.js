@@ -13,8 +13,10 @@ export const Graphics = () => {
     const [stadisticData4, setStadisticData4] = useState(null); //cantidad docentes
     const [stadisticData5, setStadisticData5] = useState(null); //seguridad
     const [stadisticData6, setStadisticData6] = useState(null); //peor financiamiento
+    const [stadisticData7, setStadisticData7] = useState(null);
     const [escuelasMunicipio, setEscuelasMunicipio] = useState({});
     const [escuelasMunicipio2, setEscuelasMunicipio2] = useState({});
+    const [negociosMunicipio, setNegociosMunicipio] = useState({});
 
     const [image, setShowImage] = useState({
         imagen: false
@@ -38,7 +40,7 @@ export const Graphics = () => {
 
     const stadisticEntornoU = async () => {
         try {
-          let res = await axios.get('/estadistica/getMejorEntornoU');
+          let res = await axios.get('/estadistica/getMejorEntornoU'); //aca
           let resultado = res.data;
           setStadisticData(resultado);
         } catch(e) {
@@ -179,6 +181,18 @@ export const Graphics = () => {
         height: 690,
       };
 
+    const stadisticNegociosMunicipal = async (e) => {
+        e.preventDefault();
+        console.log('/estadistica/getNumeroAsentamientos/getNegociosPorMun' + negociosMunicipio);
+        try {
+          let resBussiness = await axios.get('/estadistica/getNumeroAsentamientos/getNegociosPorMun' + negociosMunicipio);
+          let resultBussiness = resBussiness.data;
+          setStadisticData7(resultBussiness);
+        } catch(e) {
+          console.log(e)
+        }
+    };
+
     return (
         <div>
             <div>
@@ -223,7 +237,7 @@ export const Graphics = () => {
                 <h3>Escriba el numero de municipio (ejemplo: 39, 1, 119): </h3>
                 <form onSubmit={getProfesEscuelas}>
                     <label>Numero de municipio: </label>
-                    <input type="text" onChange={(e) => setEscuelasMunicipio(e.target.value)}/>
+                    <input type="number" required onChange={(e) => setEscuelasMunicipio(e.target.value)}/>
                     <button type="submit">Graficar</button>
                 </form>
                 <Chart
@@ -242,7 +256,7 @@ export const Graphics = () => {
                 <h3>Escriba el numero de municipio (ejemplo: 39, 1, 119): </h3>
                 <form onSubmit={getAlumnosEscuelas}>
                     <label>Numero de municipio: </label>
-                    <input type="text" onChange={(e) => setEscuelasMunicipio2(e.target.value)}/>
+                    <input type="number" required onChange={(e) => setEscuelasMunicipio2(e.target.value)}/>
                     <button type="submit">Graficar</button>
                 </form>
                 <Chart
@@ -270,7 +284,7 @@ export const Graphics = () => {
             <div className="image">
                 {image.imagen &&
                 <>
-                <h2>Gráfica municipios peor financiados </h2>
+                <h2>Gráfica de municipios con peor financiamiento (2020) </h2>
                     <Chart
                         chartType="BarChart"
                         width="100%"
@@ -280,14 +294,31 @@ export const Graphics = () => {
                     />
                 </> 
                 }
+                <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                    <br></br><br></br><br></br><br></br>
+            </div>
+            <div className="image">
+                {image.imagen &&
+                <>
+                <h2>Tabla de los negocios de Jalisco a nivel municipal (2020) </h2>
+                <form onSubmit={stadisticNegociosMunicipal}>
+                    <label>Numero de municipio: </label>
+                    <input type="number" required onChange={(e) => setNegociosMunicipio(e.target.value)}/>
+                    <button type="submit">Graficar tabla</button>
+                </form>
+                <Chart
+                    chartType="Table"
+                    width="100%"
+                    height="400px"
+                    data={stadisticData7}
+                    options={tableOptions}
+                    />
+                </> 
+                }
             </div>
         </div>
-    ); /*<Chart
-    chartType="ScatterChart"
-    data={[["Age", "Weight"], [4, 5.5], [8, 12]]}
-    width="100%"
-    height="400px"
-    legendToggle
-    />;*/
+    ); /*<>
+    <h2>Tabla de los negocios de Jalisco a nivel municipal (2020) </h2>
+    */
 };
 

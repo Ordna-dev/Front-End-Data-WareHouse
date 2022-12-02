@@ -6,8 +6,22 @@ var aux = 1;
 
 export const Commands = () => {
     const [buttonText, setButtonText] = useState('Mostrar comandos');
-    const [data, setData] = useState(null);
+    //limpieza
     const [finanzasResponse, setFinanzasResponse] = useState(null);
+    const [seguridadResponse, setSeguridadResponse] = useState(null);
+    const [entornoResponse, setEntornoResponse] = useState(null);
+    const [escuelasLocalResponse, setEscuelasLocalResponse] = useState(null);
+    const [escuelasLocalResponse2, setEscuelasLocalResponse2] = useState(null);
+    const [negociosResponse, setNegociosResponse] = useState(null);
+    const [escuelasMResponse, setEscuelasMResponse] = useState(null);
+
+    //estadistica
+    const [dataFinance, setDataFinance] = useState(null);
+    const [WdataFinance, setWDataFinance] = useState(null);
+    const [securityData, setSecurityData] = useState(null);
+    const [dataUrban, setDataUrban] = useState(null);
+    const [dataLevel, setDataLevel] = useState(null);
+    
 
     const [comando, setShowComando] = useState({
         comando: false
@@ -29,15 +43,122 @@ export const Commands = () => {
         }
     };
 
-    const statusLimpiezaEntorno = async () => {
-        console.log("pasa a status limpieza entorno")
+    //limpieza
+
+    const statusLimpiezaMejoresFinanzas = async (e) => {
         try {
-          let res = await axios.get('/limpieza/getMejorEntornoU');
-          let resultado = res.data;
-          setData(resultado)
-          console.log("pasa al try de entorno")
+            let resFinanceClean = await axios.get('/limpieza/getTopMunicipiosFinanzas');
+            let resultFinanceClean = resFinanceClean.data;
+            setFinanzasResponse(resultFinanceClean);
+          } catch(e) {
+            setFinanzasResponse(e);
+          }
+    };
+
+    const statusLimpiezaMejorSeguridad = async (e) => {
+        try {
+            let resSecurityClean = await axios.get('/limpieza/getTopLugaresSeguridad');
+            let resultSecurityClean = resSecurityClean.data;
+            setSeguridadResponse(resultSecurityClean);
+          } catch(e) {
+            setSeguridadResponse(e);
+          }
+    };
+
+    const statusLimpiezaMejorEntorno = async (e) => {
+        try {
+            let resUrbanClean = await axios.get('/limpieza/getMejorEntornoU');
+            let resultUrbanClean = resUrbanClean.data;
+            setEntornoResponse(resultUrbanClean);
+          } catch(e) {
+            setEntornoResponse(e);
+          }
+    };
+    
+
+    const statusLimpiezaEscuelasLocalidad = async (e) => {
+        e.preventDefault();
+        try {
+            let resSchoolLocal = await axios.get('/limpieza/getEscuelasPorLoc/' + escuelasLocalResponse + '/' + escuelasLocalResponse2);
+            let resultSchoolLocal = resSchoolLocal.data;
+            setEscuelasLocalResponse(resultSchoolLocal);
+          } catch(e) {
+            setEscuelasLocalResponse(e);
+          }
+    };
+
+    const statusLimpiezaNegociosMunicipal = async (e) => {
+        e.preventDefault();
+        try {
+            let resBussinessRegional = await axios.get('/limpieza/getNegociosPorMun/' + negociosResponse);
+            let resultBussinessRegional = resBussinessRegional.data;
+            setNegociosResponse(resultBussinessRegional);
+          } catch(e) {
+            setNegociosResponse(e);
+          }
+    }
+
+    const statusLimpiezaEscuelasMunicipal = async (e) => {
+        e.preventDefault();
+        try {
+            let resSchoolRegion = await axios.get('/limpieza/getEscuelasPorMun/' + escuelasMResponse);
+            let resultSchoolRegion = resSchoolRegion.data;
+            setEscuelasMResponse(resultSchoolRegion);
+          } catch(e) {
+            setEscuelasMResponse(e);
+          }
+    };
+
+    //estadistica
+
+    const statusEstadisticaMejoresFinanzas = async (e) => {
+        try {
+          let resFinance = await axios.get('/estadistica/getTopMunicipiosFinanzas');
+          let resultFinance = resFinance.data;
+          setDataFinance(resultFinance);
         } catch(e) {
-          console.log(e)
+          setDataFinance(e);
+        }
+    };
+
+    const statusEstadisticaPeoresFinanzas = async (e) => {
+        try {
+          let resWFinance = await axios.get('/estadistica/getWorstMunicipiosFinanzas');
+          let resultWFinance = resWFinance.data;
+          setWDataFinance(resultWFinance);
+        } catch(e) {
+          setWDataFinance(e);
+        }
+    };
+
+    const statusEstadisticaEntorno = async (e) => {
+        try {
+          let resUrban = await axios.get('/estadistica/getMejorEntornoU');
+          let resultUrban = resUrban.data;
+          setDataUrban(resultUrban);
+        } catch(e) {
+          setDataUrban(e);
+        }
+    };
+
+    const statusEstadisticaSeguridad = async (e) => {
+        try {
+          let resSecurity = await axios.get('/estadistica/getMunicipiosGrupos');
+          let resultSecurity = resSecurity.data;
+          setSecurityData(resultSecurity);
+        } catch(e) {
+          setSecurityData(e);
+        }
+    };
+
+    const getProfesNivelEducativo = async(e) => {
+        e.preventDefault();
+        try {
+            let resLevel = await axios.get('/estadistica/getNivelEducativo/getEscuelasPorMun' + dataLevel);
+            let resultLevel = resLevel.data;
+            setDataLevel(resultLevel);
+        } catch(e) {
+            setDataLevel(e);
         }
     };
 
@@ -53,67 +174,95 @@ export const Commands = () => {
                 <>
                     <h2>Acciones de limpieza</h2>
                     <h3>Flujo de datos de las limpiezas: MySQL (Datos listos para limpiar), Python (Limpieza con Petl), PostgreSQL (Datos limpios guardados)</h3>
+                    <h4>Mensajes en los status de los servicios: </h4>
 
-                    <button class="button button1">
+                    <li>500 en AXIOS: El servicio ya fue ejecutado anteriormente</li>
+                    <li>Exito: El servicio fue ejecutado sin problemas</li>
+                    <li>Datos en JSON: El servicio retorna datos como una señal de que fue ejecutado sin problemas</li>
+                    <li>Cualquier otro error: El servicio no puede ser ejecutado por que no se puede conectar a la base de datos</li>
+                    <br></br><br></br>
+
+                    <button class="button button1" onClick={statusLimpiezaMejoresFinanzas}>
                         Ejecutar limpieza de los datos de las finanzas de los municipios
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio: {JSON.stringify({finanzasResponse})}</p>
 
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusLimpiezaMejorSeguridad}>
                         Ejecutar limpieza de los datos de la seguridad en Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio: {JSON.stringify({seguridadResponse})}</p>
 
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusLimpiezaMejorEntorno}>
                         Ejecutar limpieza de los datos del entorno urbano en Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio: {JSON.stringify({entornoResponse})}</p>
 
-                    <button class="button button1">
-                        Ejecutar limpieza de los datos del entorno urbano en Jalisco
-                    </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <br></br><br></br><br></br><br></br>
+                    <form onSubmit={statusLimpiezaEscuelasLocalidad}>
+                        <label>Numero de municipio: </label>
+                        <input type="number" required onChange={(e) => setEscuelasLocalResponse(e.target.value)}/><br></br>
+                        <label>Numero de localidad: </label>
+                        <input type="number" required onChange={(t) => setEscuelasLocalResponse2(t.target.value)}/>
+                        <button class="button button1">
+                            Ejecutar limpieza de los datos de escuelas en Jalisco por localidad
+                        </button>
+                        <p>Mensaje del status del servicio: {JSON.stringify({escuelasLocalResponse})}</p>
+                    </form>
 
-                    <button class="button button1">
-                        Ejecutar limpieza de los datos de escuelas en Jalisco por colonia
-                    </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <br></br><br></br><br></br><br></br>
+                    <form onSubmit={statusLimpiezaNegociosMunicipal}>
+                        <label>Numero de municipio: </label>
+                        <input type="number" required onChange={(e) => setNegociosResponse(e.target.value)}/><br></br>
+                        <button class="button button1">
+                            Ejecutar limpieza de los datos de negocios en Jalisco por municipio
+                        </button>
+                        <p>Mensaje del status del servicio: {JSON.stringify({negociosResponse})}</p>
+                    </form>
+                    
+                    <br></br><br></br><br></br><br></br>
+                    <form onSubmit={statusLimpiezaEscuelasMunicipal}>
+                        <label>Numero de municipio: </label>
+                        <input type="number" required onChange={(e) => setEscuelasMResponse(e.target.value)}/>
+                        <button class="button button1">
+                            Ejecutar limpieza de los datos de escuelas en Jalisco a nivel municipal
+                        </button>
+                        <p>Mensaje del status del servicio: {JSON.stringify({escuelasMResponse})}</p>
+                    </form>
 
-                    <button class="button button1">
-                        Ejecutar limpieza de los datos de escuelas en Jalisco a nivel municipal
-                    </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
                 </> 
                 }
                 {comando.comando &&
                 <>
                     <h2>Acciones de estadística</h2>
                     <h3>Flujo de datos de los procesos estadísticos: PostgreSQL (Datos a analizar), Python (Procesamiento de datos), retorno de los datos estadísticos al Front-End (Gráficas en ReactJS)</h3>
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusEstadisticaMejoresFinanzas}>
                         Ejecutar proceso estadístico de los municipios mejor financiados de Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio (si retorna datos es porque si se ejecuto de manera correcta): {JSON.stringify({dataFinance})}</p>
 
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusEstadisticaPeoresFinanzas}>
                         Ejecutar proceso estadístico de los municipios peor financiados de Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio (si retorna datos es porque si se ejecuto de manera correcta): {JSON.stringify({WdataFinance})}</p>
 
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusEstadisticaSeguridad}>
                         Ejecutar proceso estadístico de los municipios con menor n° de incidentes de seguridad en Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
+                    <p>Mensaje del status del servicio (si retorna datos es porque si se ejecuto de manera correcta): {JSON.stringify({securityData})}</p>
 
-                    <button class="button button1">
+                    <button class="button button1" onClick={statusEstadisticaEntorno}>
                         Ejecutar proceso estadístico de los municipios con el entorno urbano más optimo en Jalisco
                     </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
-
-                    <button class="button button1">
-                        Ejecutar proceso estadístico de los municipios con el entorno urbano más optimo en Jalisco
-                    </button>
-                    <p>Mensaje del status del servicio: (Ya se hizo la limpieza anteriormente)</p>
-
+                    <p>Mensaje del status del servicio (si retorna datos es porque si se ejecuto de manera correcta): {JSON.stringify({dataUrban})} </p>
+                    <br></br><br></br><br></br>
+                    <form onSubmit={getProfesNivelEducativo}>
+                        <label>Numero de municipio: </label>
+                        <input type="number" required onChange={(e) => setDataLevel(e.target.value)}/>
+                        <button class="button button1">
+                            Ejecutar proceso estadístico de nivel educativo en según el numero del municipio
+                        </button>
+                        <p>Mensaje del status del servicio (si retorna datos es porque si se ejecuto de manera correcta): {JSON.stringify({dataLevel})}</p>
+                    </form>
                 </>
                 }
             </div>

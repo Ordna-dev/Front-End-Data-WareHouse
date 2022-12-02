@@ -86,7 +86,7 @@ export const Profile = () => {
   //Rol: {data[0].name}
   return (
     isAuthenticated && (
-      <div>
+      <div align="center">
         {setUserRole()}
         <img src={user.picture} />
         <h2>Usuario: {user.name}</h2>

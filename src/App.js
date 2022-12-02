@@ -70,7 +70,7 @@ function App() {
             <LogoutButton />
             <nav class="menu">
             <ul class="main-menu">
-                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
+                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Perfil</li>
                 {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
@@ -96,7 +96,7 @@ function App() {
             <LogoutButton />
             <nav class="menu">
             <ul class="main-menu">
-                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
+                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Perfil</li>
                 {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
@@ -122,7 +122,7 @@ function App() {
             <LogoutButton />
             <nav class="menu">
             <ul class="main-menu">
-                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
+                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Perfil</li>
                 {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
@@ -149,7 +149,7 @@ function App() {
             <LogoutButton />
             <nav class="menu">
             <ul class="main-menu">
-                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
+                <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Perfil</li>
                 {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
