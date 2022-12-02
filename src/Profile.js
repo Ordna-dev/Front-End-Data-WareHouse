@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+export var isAdmin = false;
 
 export const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -43,6 +44,7 @@ export const Profile = () => {
   }, []);*/
 
   var rol = "t"
+  var role = "Gerente"
 
   const setUserRole = () => {
     rol = user.sub;
@@ -62,22 +64,34 @@ export const Profile = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(data)
-  },[data]);
+  const showUserRole = () => {
+    if(Object.keys(data).length === 0){
+      isAdmin = false;
+      role = "Gerente";
+    } else {
+      if(data[0].name == 'Administrador'){
+        role = data[0].name;
+        isAdmin = true;
+      } else {
+        role = data[0].name;
+        isAdmin = false;
+      }
+      
+    }
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  //Rol: {data[0].name}
   return (
     isAuthenticated && (
-      //{setUserRole({user.sub})}
       <div>
         {setUserRole()}
         <img src={user.picture} />
         <h2>Usuario: {user.name}</h2>
-        <h3>Información del rol: {JSON.stringify({data})}</h3>
+        {showUserRole()}
+        <h2>Rol: {role}</h2>
       </div>
     )
   );

@@ -2,8 +2,9 @@ import './App.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from "./Login";
 import { LogoutButton } from "./Logout";
-import { Profile } from "./Profile";
+import { Profile, isAdmin } from "./Profile";
 import { Graphics } from './Graphics';
+import { Commands } from './Commands';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -61,10 +62,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    mensaje()
-  }, []);
-
   if (accion.accion == true) {
     return (
       <div class="container">
@@ -74,7 +71,7 @@ function App() {
             <nav class="menu">
             <ul class="main-menu">
                 <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
-                <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>
+                {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
             </nav>
@@ -83,8 +80,8 @@ function App() {
           <LoginButton />
         )}
       <article>
-            <div class="content">
-            <p>Comandos a ejecutar:</p>
+            <div class="content" align="center">
+            <Commands />
             </div>
       </article>
     </div>
@@ -100,7 +97,7 @@ function App() {
             <nav class="menu">
             <ul class="main-menu">
                 <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
-                <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>
+                {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
             </nav>
@@ -126,7 +123,7 @@ function App() {
             <nav class="menu">
             <ul class="main-menu">
                 <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
-                <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>
+                {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
             </nav>
@@ -153,7 +150,7 @@ function App() {
             <nav class="menu">
             <ul class="main-menu">
                 <li onClick={() => iniciaProfile("profile")}><i class="fa fa-home"></i>Home</li>
-                <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>
+                {isAdmin && <li onClick={() => iniciaAccion("accion")}><i class="fa fa-user"></i>Acciones</li>}
                 <li onClick={() => iniciaGraphic("graphic")}><i class="fa fa-search"></i>Gráficas</li>
             </ul>
             </nav>
