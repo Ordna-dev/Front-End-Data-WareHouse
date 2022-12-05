@@ -203,6 +203,8 @@ export const Graphics = () => {
             <div className="image">
                 {image.imagen && 
                     <>
+                    <h4>Si no se generan algunas gráficas es porque el administrador aún no ejecuta la limpieza de datos y el proceso estadístico de los datos.
+                    Y también porque algunas requieren datos del usuario para graficarse (botón de graficar)</h4>
                     <h2>Gráfica de finanzas</h2>
                         <Chart
                         chartType="BarChart"
