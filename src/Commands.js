@@ -174,12 +174,12 @@ export const Commands = () => {
                 <>
                     <h2>Acciones de limpieza</h2>
                     <h3>Flujo de datos de las limpiezas: MySQL (Datos listos para limpiar), Python (Limpieza con Petl), PostgreSQL (Datos limpios guardados)</h3>
-                    <h4>Mensajes en los status de los servicios: </h4>
+                    <h4>Códigos de mensajes en los status de los servicios: </h4>
 
-                    <li>500 en AXIOS: El servicio ya fue ejecutado anteriormente</li>
-                    <li>Exito: El servicio fue ejecutado sin problemas</li>
+                    <li>500 en AXIOS o 404: Error en la base de datos (necesita encenderse)</li>
+                    <li>200 Exito: El servicio fue ejecutado sin problemas</li>
+                    <li>400: El servicio recibio datos que no existen en la base de datos</li>
                     <li>Datos en JSON: El servicio retorna datos como una señal de que fue ejecutado sin problemas</li>
-                    <li>Cualquier otro error: El servicio no puede ser ejecutado por que no se puede conectar a la base de datos</li>
                     <br></br><br></br>
 
                     <button class="button button1" onClick={statusLimpiezaMejoresFinanzas}>
@@ -196,8 +196,9 @@ export const Commands = () => {
                         Ejecutar limpieza de los datos del entorno urbano en Jalisco
                     </button>
                     <p>Mensaje del status del servicio: {JSON.stringify({entornoResponse})}</p>
-
+                    
                     <br></br><br></br><br></br><br></br>
+                    <h3>A partir de aquí es necesario esperar máximo 2 minutos para verificar si el servicio se ejecuto correctamente o incorrectamente debido al gran flujo de datos</h3>
                     <form onSubmit={statusLimpiezaEscuelasLocalidad}>
                         <label>Numero de municipio: </label>
                         <input type="number" required onChange={(e) => setEscuelasLocalResponse(e.target.value)}/><br></br>
