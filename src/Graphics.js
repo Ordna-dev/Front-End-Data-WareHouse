@@ -77,7 +77,7 @@ export const Graphics = () => {
     const dataFinanzas = stadisticData2;
       
     const optionsFinanzas = {
-        title: "10 municipios con mayor financiamiento en 2020 (en miles de pesos)",
+        title: "10 municipios con mayor financiamiento en 2021 (en miles de pesos)",
         width: 620,
         height: 690,
         bar: { groupWidth: "95%" },
@@ -273,11 +273,12 @@ export const Graphics = () => {
             <div className="image">
                 {image.imagen &&
                 <>
-                <h2>Gráfica de menores incidentes de seguridad según el identificador (numero) del municipio (2020)</h2>
+                <h4>Gráfica del n° personas que se sienten seguras en donde viven según el numero del municipio (2020)</h4>
                 <Chart
                     chartType="Bar"
                     width="100%"
-                    height="400px"
+                    height="600px"
+                    
                     data={stadisticData5}
                 />
                 </> 
@@ -286,7 +287,7 @@ export const Graphics = () => {
             <div className="image">
                 {image.imagen &&
                 <>
-                <h2>Gráfica de municipios con peor financiamiento (2020) </h2>
+                <h2>Gráfica de municipios con peor financiamiento (2021) </h2>
                     <Chart
                         chartType="BarChart"
                         width="100%"
