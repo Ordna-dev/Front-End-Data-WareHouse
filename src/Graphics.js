@@ -10,13 +10,15 @@ export const Graphics = () => {
     const [stadisticData, setStadisticData] = useState(null); //finanzas
     const [stadisticData2, setStadisticData2] = useState(null); //entorno urbano
     const [stadisticData3, setStadisticData3] = useState(null); //cantidad docentes
-    const [stadisticData4, setStadisticData4] = useState(null); //cantidad docentes
+    const [stadisticData4, setStadisticData4] = useState(null); //cantidad alumnos
     const [stadisticData5, setStadisticData5] = useState(null); //seguridad
     const [stadisticData6, setStadisticData6] = useState(null); //peor financiamiento
-    const [stadisticData7, setStadisticData7] = useState(null);
+    const [stadisticData7, setStadisticData7] = useState(null); //negocios por localidad 
+    const [stadisticData8, setStadisticData8] = useState(null);
     const [escuelasMunicipio, setEscuelasMunicipio] = useState({});
     const [escuelasMunicipio2, setEscuelasMunicipio2] = useState({});
     const [negociosMunicipio, setNegociosMunicipio] = useState({});
+    const [nivelEducativo, setNivelEducativo] = useState({});
 
     const [image, setShowImage] = useState({
         imagen: false
@@ -193,6 +195,18 @@ export const Graphics = () => {
         }
     };
 
+    const stadisticNivelEducativo = async (e) => {
+        e.preventDefault();
+        try {
+          let resNivel = await axios.get('/estadistica/getNivelEducativo/getEscuelasPorMun' + nivelEducativo);
+          let resultNivel = resNivel.data;
+          setStadisticData8(resultNivel);
+          console.log(stadisticData8);
+        } catch(e) {
+          console.log(e)
+        }
+    };
+
     return (
         <div>
             <div>
@@ -203,8 +217,8 @@ export const Graphics = () => {
             <div className="image">
                 {image.imagen && 
                     <>
-                    <h4>Si no se generan algunas gráficas es porque el administrador aún no ejecuta la limpieza de datos y el proceso estadístico de los datos.
-                    Y también porque algunas requieren datos del usuario para graficarse (botón de graficar)</h4>
+                    <h4>Si no se generan algunas gráficas es porque el administrador aún no ejecuta la limpieza de datos.
+                    Y también porque algunas requieren datos del usuario para graficarse (botón de graficar).</h4>
                     <h2>Gráfica de finanzas</h2>
                         <Chart
                         chartType="BarChart"
@@ -316,6 +330,24 @@ export const Graphics = () => {
                     data={stadisticData7}
                     options={tableOptions}
                     />
+                </> 
+                }
+            </div>
+            <div className="image">
+                {image.imagen &&
+                <>
+                <h2>Gráfico del nivel educativo de las escuelas del municipio (2020) </h2>
+                <form onSubmit={stadisticNivelEducativo}>
+                    <label>Numero de municipio: </label>
+                    <input type="number" required onChange={(e) => setNivelEducativo(e.target.value)}/>
+                    <button type="submit">Graficar tabla</button>
+                </form>
+                <Chart
+                    chartType="PieChart"
+                    data={stadisticData8}
+                    width={"100%"}
+                    height={"400px"}
+                />
                 </> 
                 }
             </div>
