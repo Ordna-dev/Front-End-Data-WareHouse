@@ -54,7 +54,13 @@ export const Commands = () => {
             setFinanzasResponse(resultFinanceClean);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setFinanzasResponse(e);
+            setButton(true);
+            if (e.response) {
+                setFinanzasResponse(e.response.data);
+            } else {
+                setFinanzasResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -66,7 +72,13 @@ export const Commands = () => {
             setSeguridadResponse(resultSecurityClean);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setSeguridadResponse(e);
+            setButton(true);
+            if (e.response) {
+                setSeguridadResponse(e.response.data);
+            } else {
+                setSeguridadResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -78,7 +90,13 @@ export const Commands = () => {
             setEntornoResponse(resultUrbanClean);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setEntornoResponse(e);
+            setButton(true);
+            if (e.response) {
+                setEntornoResponse(e.response.data);
+            } else {
+                setEntornoResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
     
@@ -92,7 +110,13 @@ export const Commands = () => {
             setEscuelasLocalResponse(resultSchoolLocal);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setEscuelasLocalResponse(e);
+            setButton(true);
+            if (e.response) {
+                setEscuelasLocalResponse(e.response.data);
+            } else {
+                setEscuelasLocalResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -105,7 +129,13 @@ export const Commands = () => {
             setNegociosResponse(resultBussinessRegional);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setNegociosResponse(e);
+            setButton(true);
+            if (e.response) {
+                setNegociosResponse(e.response.data);
+            } else {
+                setNegociosResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     }
 
@@ -118,7 +148,13 @@ export const Commands = () => {
             setEscuelasMResponse(resultSchoolRegion);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setEscuelasMResponse(e);
+            setButton(true);
+            if (e.response) {
+                setEscuelasMResponse(e.response.data);
+            } else {
+                setEscuelasMResponse(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -132,7 +168,13 @@ export const Commands = () => {
             setDataFinance(resultFinance);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setDataFinance(e);
+            setButton(true);
+            if (e.response) {
+                setDataFinance(e.response.data);
+            } else {
+                setDataFinance(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -144,7 +186,13 @@ export const Commands = () => {
             setWDataFinance(resultWFinance);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setWDataFinance(e);
+            setButton(true);
+            if (e.response) {
+                setWDataFinance(e.response.data);
+            } else {
+                setWDataFinance(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -156,7 +204,13 @@ export const Commands = () => {
             setDataUrban(resultUrban);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setDataUrban(e);
+            setButton(true);
+            if (e.response) {
+                setDataUrban(e.response.data);
+            } else {
+                setDataUrban(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -168,7 +222,13 @@ export const Commands = () => {
             setSecurityData(resultSecurity);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setSecurityData(e);
+            setButton(true);
+            if (e.response) {
+                setSecurityData(e.response.data);
+            } else {
+                setSecurityData(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -181,7 +241,13 @@ export const Commands = () => {
             setDataLevel(resultLevel);
             setTimeout(() => setButton(false), 8000);
         } catch(e) {
-            setDataLevel(e);
+            setButton(true);
+            if (e.response) {
+                setDataLevel(e.response.data);
+            } else {
+                setDataLevel(e);
+            }
+            setTimeout(() => setButton(false), 8000);
         }
     };
 
@@ -200,10 +266,12 @@ export const Commands = () => {
                     <h3>Flujo de datos de las limpiezas: MySQL (Datos listos para limpiar), Python (Limpieza con Petl), PostgreSQL (Datos limpios guardados)</h3>
                     <h4>Códigos de mensajes en los status de los servicios: </h4>
 
-                    <li>500 en AXIOS o 404 en AXIOS: No existe la tabla en la base de datos MySQL o PostgreSQL</li>
+                    
                     <li>200 Exito: El servicio fue ejecutado sin problemas</li>
-                    <li>400: El servicio recibio datos que no existen en la base de datos</li>
+                    <li>400 o 404 en AXIOS: El servicio recibio datos que no existen en la tabla correspondiente de la base de datos PostgreSQL</li>
+                    <li>404: No existe la tabla correspondiente en PostgreSQL(estadística) o MySQL(limpieza)</li>
                     <li>Datos en JSON: El servicio retorna datos como una señal de que fue ejecutado sin problemas</li>
+                    <li>500 en AXIOS: Error en la conexion con el backend (revise el error detalladamente en consola)</li>
                     <br></br><br></br>
 
                     <button class="button button1" disabled={button} onClick={statusLimpiezaMejoresFinanzas}>
