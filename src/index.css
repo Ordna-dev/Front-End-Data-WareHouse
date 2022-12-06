@@ -37,6 +37,12 @@ code {
   color: white;
 }
 
+.button1:disabled{
+  background-color: #c9705a;
+  color: black;
+  pointer-events: none;
+}
+
 .button2 {
   background-color: white;
   color: black;
